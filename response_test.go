@@ -41,11 +41,10 @@ func TestResponse_RedirectWithCode(t *testing.T) {
 func TestResponse_With(t *testing.T) {
 	w := NewRecorder()
 	r := httptest.NewRequest("GET", "http://example.com", nil)
-	Boot()
 	hut := NewHttp(w, r)
 
 	expected := "Test error message"
-	hut.Response.With("error", expected)
+	hut.Response.With("error", expected).Redirect("")
 	got := hut.Session.GetFlash("error")
 
 	if got != expected {

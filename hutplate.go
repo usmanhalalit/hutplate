@@ -7,8 +7,8 @@ import (
 type Http struct {
 	*http.Request
 	Response Response
-	Session Session
-	Auth Auth
+	Session  session
+	Auth     Auth
 }
 
 type Configuration struct {
@@ -20,15 +20,8 @@ type Handler func(hp Http) interface{}
 
 var Config Configuration
 
-func Boot() {
-	BootSession()
-}
-
 func NewHttp(responseWriter http.ResponseWriter, request *http.Request) Http {
-	session := Session {
-		request,
-		responseWriter,
-	}
+	session := NewSession(request, responseWriter, nil)
 
 	newHttp := Http {
 		request,

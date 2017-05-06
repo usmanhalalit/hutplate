@@ -9,7 +9,6 @@ import (
 func TestSession(t *testing.T) {
 	var r *http.Request
 	var w *httptest.ResponseRecorder
-	Boot()
 	w = NewRecorder()
 	r, err := http.NewRequest("GET", "http://www.example.com", nil)
 	if err != nil {
@@ -28,14 +27,13 @@ func TestSession(t *testing.T) {
 	}
 
 	if got != expected {
-		t.Errorf("Session Test: Invalid session value got %v, expected %v", got, expected)
+		t.Errorf("invalid session value got %v, expected %v", got, expected)
 	}
 }
 
 func TestSessionFlash(t *testing.T) {
 	var r *http.Request
 	var w *httptest.ResponseRecorder
-	Boot()
 	w = NewRecorder()
 	r, err := http.NewRequest("GET", "http://www.example.com", nil)
 	if err != nil {
@@ -51,7 +49,7 @@ func TestSessionFlash(t *testing.T) {
 	got := hut.Session.GetFlash("test_key")
 
 	if got != expected {
-		t.Errorf("Session Test: Invalid session value got %v, expected %v", got, expected)
+		t.Errorf("invalid session value got %v, expected %v", got, expected)
 	}
 
 }

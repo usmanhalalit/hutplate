@@ -5,7 +5,7 @@ import "net/http"
 type Response struct {
 	http.ResponseWriter
 	request *http.Request
-	session Session
+	session session
 }
 
 func (response Response) Redirect(url string, code ...int) Response {

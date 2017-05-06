@@ -6,7 +6,7 @@ import (
 )
 
 type Auth struct {
-	session Session
+	session session
 }
 
 func (auth Auth) Login(email string, password string) (bool, error) {
