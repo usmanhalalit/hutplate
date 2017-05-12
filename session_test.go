@@ -7,16 +7,9 @@ import (
 )
 
 func TestSession(t *testing.T) {
-	var r *http.Request
-	var w *httptest.ResponseRecorder
-	w = NewRecorder()
-	r, err := http.NewRequest("GET", "http://www.example.com", nil)
-	if err != nil {
-		t.Fatal("failed to create request", err)
-	}
-	hut := NewHttp(w, r)
+	hut := GetARequest(t)
 	expected := "test_value"
-	err = hut.Session.Set("test_key", expected)
+	err := hut.Session.Set("test_key", expected)
 	if err != nil {
 		t.Fatal("failed to create session store", err)
 	}
@@ -29,6 +22,17 @@ func TestSession(t *testing.T) {
 	if got != expected {
 		t.Errorf("invalid session value got %v, expected %v", got, expected)
 	}
+}
+func GetARequest(t *testing.T) (Http) {
+	var r *http.Request
+	var w *httptest.ResponseRecorder
+	w = NewRecorder()
+	r, err := http.NewRequest("GET", "http://www.example.com", nil)
+	if err != nil {
+		t.Fatal("failed to create request", err)
+	}
+	hut := NewHttp(w, r)
+	return hut
 }
 
 func TestSessionFlash(t *testing.T) {

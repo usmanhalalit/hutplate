@@ -22,12 +22,12 @@ func (auth Auth) Login(email string, password string) (bool, error) {
 }
 
 func (auth Auth) Check() bool {
-	userId, _ := auth.session.Get("user_id")
-	return userId != nil
+	return auth.UserId() != nil
 }
 
-func (auth Auth) UserId() (interface{}, error) {
-	return auth.session.Get("user_id")
+func (auth Auth) UserId() (interface{}) {
+	userId, _ := auth.session.Get("user_id")
+	return userId
 }
 
 func (auth Auth) User() (interface{}, error) {
