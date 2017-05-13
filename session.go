@@ -3,7 +3,6 @@ package hutplate
 import (
 	"github.com/gorilla/sessions"
 	"net/http"
-	"os"
 )
 
 var store sessions.Store
@@ -15,7 +14,7 @@ type session struct {
 
 func NewSession (request *http.Request, responseWriter http.ResponseWriter, s *sessions.Store) session {
 	if s == nil {
-		store = sessions.NewFilesystemStore("", []byte(os.Getenv("APP_KEY")))
+		store = sessions.NewFilesystemStore(Config.SessionDirectory, []byte(Config.SessionSecretKey))
 	} else {
 		store = *s
 	}

@@ -12,8 +12,8 @@ func (handleFunc Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	response := handleFunc(hut)
 	switch response.(type) {
 	case error:
-		if Config.HandleError != nil {
-			Config.HandleError(response.(error), hut)
+		if Config.ErrorHandler != nil {
+			Config.ErrorHandler(response.(error), hut)
 			break
 		}
 

@@ -1,8 +1,0 @@
-
-[[dependencies]]
-  branch = "master"
-  name = "github.com/gorilla/sessions"
-
-[[dependencies]]
-  branch = "master"
-  name = "golang.org/x/crypto"
