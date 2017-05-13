@@ -13,14 +13,14 @@ func TestAuth_LoginWithValidCredsAndLogout(t *testing.T) {
 	}
 
 	if ! hut.Auth.Check() {
-		t.Error("user logging in falied")
+		t.Error("user logging in failed")
 	}
 
 
 	hut.Auth.Logout()
 
 	if hut.Auth.Check() {
-		t.Error("user logout in falied")
+		t.Error("user logout in failed")
 	}
 
 	if hut.Auth.UserId() != nil {

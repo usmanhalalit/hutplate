@@ -11,14 +11,13 @@ type Http struct {
 	Auth     Auth
 }
 
-type Configuration struct {
+type configuration struct {
 	GetUserWithId func(id interface{}) interface{}
 	GetUserWithCred func(credential interface{}) (interface{}, string)
+	HandleError func(err error, hut Http)
 }
 
-type Handler func(hp Http) interface{}
-
-var Config Configuration
+var Config configuration
 
 func NewHttp(responseWriter http.ResponseWriter, request *http.Request) Http {
 	session := NewSession(request, responseWriter, nil)
@@ -37,16 +36,4 @@ func NewHttp(responseWriter http.ResponseWriter, request *http.Request) Http {
 	}
 
 	return  newHttp
-}
-
-func (handleFunc Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	response := handleFunc(NewHttp(w, r))
-	switch response.(type) {
-	case error:
-		http.Error(w, response.(error).Error(), 500)
-	case string:
-		w.Write([]byte(response.(string)))
-	default:
-
-	}
 }
