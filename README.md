@@ -8,7 +8,7 @@ HutPlate is a Library over your standard net/http library which makes your life 
  Some examples:
 ```go
 // Use any router, also using hutplate.Handler is optional
-router.Handle("/", hutplate.Handler(myHandler))
+router.Handle("/", hutplate.Handler(CreatePost))
 
 func CreatePost(hp hutplate.Http) interface{} {
 	if ! hp.Auth.Check() {
@@ -30,6 +30,8 @@ func CreatePost(hp hutplate.Http) interface{} {
 
 ## Setup
 
+### Configuration
+
 The only mandatory configuration for HutPlate is that you let it know where to find your user 
 (any database/datastore is fine). 
 It will give you email or whatever you log your user in with, 
@@ -45,15 +47,106 @@ hutplate.Config.GetUserWithCred = func(credential interface{}) (interface{}, str
 }
 ```
 
-**Another highly recommended config** is that you set a session secret key:
+**Another highly recommended configuration** is that you set a session secret key:
 ```go
 hutplate.Config.SessionSecretKey = "a_random_secret_key"
 ```
 
+### Creating a HutPlate Instance
+
+HutPlate comes with a HTTP handler, which gives you some extra power. 
+But it's optional to use. If you want to keep using default handler 
+then you just call `hutplate.NewHttp` and give your `Request` and `ResponseWriter`. 
+Here's how:
+```go
+func MyHandler(w http.ResponseWriter, r *http.Request,) {
+	hp := hutplate.NewHttp(w, r)
+}
+```
+
+If you use the HutPlate handler, then it even easier:
+```go
+router.Handle("/", hutplate.Handler(CreatePost))
+
+func CreatePost(hp hutplate.Http) interface{} {
+	// hutplate.Http extends http.Request, so everything is still there
+	// like hp.FormValue("content")
+
+	// The http.ResponseWriter is also there
+	hp.Response.Write([]byte("Success!"))
+}
+```
+
+
 ## Authentication
 
+### Login
 ```go
-success, err := hp.Auth.Login(email, password)
+success, _ := hp.Auth.Login(email, password)
+```
+
+It will let you know if user logging in succeeded or not by returning true or false
+ and if there is an error (in rare case) it'll be in the second return value.
+ 
+Login requires you to store bcrypt hashed password when you register/save your user.
+Here is an example of how you hash you password using bcrypt
+
+```go
+hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), 14)
+```
+
+### Check if Logged In
+```go
+hp.Auth.Check()
+```
+Will return true or false.
+
+### Get Logged in User ID
+```go
+hp.Auth.UserId()
+```
+
+### Get the Logged in User
+
+It gives you the whole user object, not just id. To use this feature,
+ you need to set a configuration to let HutPlate know how to 
+ get the user from your database/datastore.
+```go
+user, err = hp.Auth.User()
+```
+
+**Configuration**
+```go
+hutplate.Config.GetUserWithId = func(userId interface{}) interface {} {
+    // You will receive the userId just return the user with corresponding id  
+}
+```
+
+A GORM example:
+```go
+hutplate.Config.GetUserWithId = func(userId interface{}) interface {} {
+    user := models.User{}
+    if userId == nil {
+        return user
+    }
+    db.Orm.Find(&user, userId)
+    return user
+}
+```
+
+### Logout
+```go
+hp.Auth.Logout()
 ```
  
 ## Session
+
+
+
+### Session Config
+
+Store
+
+Secret Key
+
+
