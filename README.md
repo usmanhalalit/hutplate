@@ -27,5 +27,33 @@ func CreatePost(hp hutplate.Http) interface{} {
 	hp.Response.Write([]byte("Success!"))
 }
 ```
+
+## Setup
+
+The only mandatory configuration for HutPlate is that you let it know where to find your user 
+(any database/datastore is fine). 
+It will give you email or whatever you log your user in with, 
+you just return that user's id and hashed password. 
+For example, a GORM example would look like this:
+```go
+hutplate.Config.GetUserWithCred = func(credential interface{}) (interface{}, string) {
+    // credential will be email, username or whatever you log in with
+    user := models.User{}
+    db.Orm.Find(&user, "email='" + credential.(string) + "'")
+    
+    return user.ID, user.Password
+}
+```
+
+**Another highly recommended config** is that you set a session secret key:
+```go
+hutplate.Config.SessionSecretKey = "a_random_secret_key"
+```
+
+## Authentication
+
+```go
+success, err := hp.Auth.Login(email, password)
+```
  
- 
+## Session
