@@ -1,8 +1,8 @@
 package hutplate
 
 import (
-	"testing"
 	"net/http"
+	"testing"
 )
 
 func TestResponse_Redirect(t *testing.T) {
