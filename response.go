@@ -9,7 +9,7 @@ type response struct {
 }
 
 func newResponse(w http.ResponseWriter, r *http.Request, s session) response {
-	return response {
+	return response{
 		w,
 		r,
 		s,

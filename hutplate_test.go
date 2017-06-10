@@ -1,10 +1,10 @@
 package hutplate
 
 import (
-	"testing"
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"bytes"
+	"testing"
 )
 
 func TestNewHttp(t *testing.T) {

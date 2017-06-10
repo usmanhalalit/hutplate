@@ -12,10 +12,9 @@ func TestAuth_LoginWithValidCredsAndLogout(t *testing.T) {
 		t.Errorf("invalid user id expected 2 got %v", got)
 	}
 
-	if ! hut.Auth.Check() {
+	if !hut.Auth.Check() {
 		t.Error("user logging in failed")
 	}
-
 
 	hut.Auth.Logout()
 
@@ -40,7 +39,6 @@ func TestAuth_LoginWithInvalidCreds(t *testing.T) {
 		t.Error("user logged in even after invalid email")
 	}
 
-
 }
 
 func SetupLoggingInAndGetHut(t *testing.T) Http {
@@ -54,4 +52,3 @@ func SetupLoggingInAndGetHut(t *testing.T) Http {
 	}
 	return GetARequest(t)
 }
-

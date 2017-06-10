@@ -1,8 +1,8 @@
 package hutplate
 
 import (
-	"net/http"
 	"github.com/gorilla/sessions"
+	"net/http"
 )
 
 type Http struct {
@@ -27,14 +27,14 @@ func NewHttp(responseWriter http.ResponseWriter, request *http.Request) Http {
 	session := NewSession(request, responseWriter, Config.SessionStore)
 	r := newResponse(responseWriter, request, session)
 
-	newHttp := Http {
-		Request: request,
+	newHttp := Http{
+		Request:  request,
 		Response: r,
-		Session: session,
-		Auth: Auth {
+		Session:  session,
+		Auth: Auth{
 			session,
 		},
 	}
 
-	return  newHttp
+	return newHttp
 }

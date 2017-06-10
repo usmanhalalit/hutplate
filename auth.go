@@ -1,8 +1,8 @@
 package hutplate
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"errors"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Auth struct {
@@ -25,7 +25,7 @@ func (auth Auth) Check() bool {
 	return auth.UserId() != nil
 }
 
-func (auth Auth) UserId() (interface{}) {
+func (auth Auth) UserId() interface{} {
 	userId, _ := auth.session.Get("user_id")
 	return userId
 }

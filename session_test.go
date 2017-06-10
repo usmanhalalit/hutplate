@@ -1,8 +1,8 @@
 package hutplate
 
 import (
-	"net/http/httptest"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
@@ -23,7 +23,7 @@ func TestSession(t *testing.T) {
 		t.Errorf("invalid session value got %v, expected %v", got, expected)
 	}
 }
-func GetARequest(t *testing.T) (Http) {
+func GetARequest(t *testing.T) Http {
 	var r *http.Request
 	var w *httptest.ResponseRecorder
 	w = NewRecorder()

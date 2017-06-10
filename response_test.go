@@ -1,8 +1,8 @@
 package hutplate
 
 import (
-	"testing"
 	"net/http/httptest"
+	"testing"
 )
 
 func TestResponse_Redirect(t *testing.T) {
@@ -17,7 +17,7 @@ func TestResponse_Redirect(t *testing.T) {
 		t.Errorf("invalid redirect location expected %v got %v", expectedLocation, gotLocation)
 	}
 
-	expectedCode :=  302
+	expectedCode := 302
 	gotCode := w.Code
 	if gotCode != expectedCode {
 		t.Errorf("invalid redirect code expected %v got %v", expectedCode, gotCode)
@@ -31,7 +31,7 @@ func TestResponse_RedirectWithCode(t *testing.T) {
 
 	hut.Response.Redirect("a", 301)
 
-	expectedCode :=  301
+	expectedCode := 301
 	gotCode := w.Code
 	if gotCode != expectedCode {
 		t.Errorf("invalid redirect code expected %v got %v", expectedCode, gotCode)

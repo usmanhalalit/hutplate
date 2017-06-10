@@ -1,8 +1,8 @@
 package hutplate
 
 import (
-	"net/http"
 	"log"
+	"net/http"
 )
 
 type Handler func(hut Http) interface{}

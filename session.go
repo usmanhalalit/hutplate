@@ -8,11 +8,11 @@ import (
 var store sessions.Store
 
 type session struct {
-	request *http.Request
+	request        *http.Request
 	responseWriter http.ResponseWriter
 }
 
-func NewSession (request *http.Request, responseWriter http.ResponseWriter, s *sessions.Store) session {
+func NewSession(request *http.Request, responseWriter http.ResponseWriter, s *sessions.Store) session {
 	if s == nil {
 		store = sessions.NewFilesystemStore(Config.SessionDirectory, []byte(Config.SessionSecretKey))
 	} else {
@@ -55,7 +55,7 @@ func (s session) SetFlash(key string, value interface{}) error {
 	return store.Save(s.request, s.responseWriter, sessionStore)
 }
 
-func (s session) GetFlash(key string) (interface{}) {
+func (s session) GetFlash(key string) interface{} {
 	sessionStore, err := store.Get(s.request, "s")
 	if err != nil {
 		return nil
@@ -65,7 +65,7 @@ func (s session) GetFlash(key string) (interface{}) {
 
 	if len(flashes) == 0 {
 		flash = nil
-	}  else {
+	} else {
 		flash = flashes[0]
 	}
 	err = store.Save(s.request, s.responseWriter, sessionStore)
