@@ -54,9 +54,9 @@ hutplate.Config.SessionSecretKey = "a_random_secret_key"
 
 ### Creating a HutPlate Instance
 
-HutPlate comes with a HTTP handler, which gives you some extra power. 
-But it's optional to use. If you want to keep using default handler 
-then you just call `hutplate.NewHttp` and give your `Request` and `ResponseWriter`. 
+HutPlate comes with an HTTP handler, which gives you some extra power. 
+But it's optional to use. If you want to keep using the default handler 
+then you just call `hutplate.NewHttp` and give it your `Request` and `ResponseWriter`. 
 Here's how:
 ```go
 func MyHandler(w http.ResponseWriter, r *http.Request,) {
@@ -138,9 +138,75 @@ hutplate.Config.GetUserWithId = func(userId interface{}) interface {} {
 ```go
 hp.Auth.Logout()
 ```
+
+## HutPlate HTTP Handler
+
+HutPlate also comes with an HTTP handler, using it is optional but you get so much
+power by using it. 
+
+ - It automatically creates an HutPlate instance for you.
+ - You can return an error from the handler, so you do much less `if err != nil`.
+ - You can configure how to handle all errors or group of errors. There is a sensible default.
+ - You can return a `Redirect` or a plain string response (text, HTML, etc.).
+
+```go
+// Use any router
+router.Handle("/", hutplate.Handler(CreatePost))
+
+func CreatePost(hp hutplate.Http) interface{} {
+	if ! hp.Auth.Check() {
+	    // Will redirect and set flash message in session
+	    return hp.Response.Redirect("/login").With("notice", "You have to login first!")
+	}
+	
+	// hutplate.Http extends http.Request, so everything is still there
+	if err := createPost(hp.FormValue("content")); err =! nil {
+	    // Will show a generic error message to user with 500 status.
+	    //  You can also customize the behaviour
+	    return err
+	}
+	
+	// The http.ResponseWriter is also there
+	hp.Response.Write([]byte("Success!"))
+}
+```
+
+## Redirect
+
+```go
+// Plain redirect
+hp.Response.Redirect("/admin")
+
+// Redirect with a flash message
+hp.Response.Redirect("/login").With("error", "Please do login!")
+
+// Redirect with a different status code
+hp.Response.Redirect("/login", 301)
+```
  
 ## Session
 
+Set a session value and it will persist.
+```go
+err := hp.Session.Set("test_key", "test_value")
+```
+
+Get the session value
+```go
+err := hp.Session.Get("test_key")
+```
+
+### Flash Messages
+```go
+err = hut.Session.SetFlash("test_key", "value")
+```
+
+Getting a flash message is same as getting normal session value:
+```go
+err := hp.Session.Get("test_key")
+```
+
+[As mentioned above](#Redirect) you can also easily set a flash message while you redirect.  
 
 
 ### Session Config
@@ -149,4 +215,13 @@ Store
 
 Secret Key
 
+## All Config
 
+## Credits
+
+Gorilla Sessions
+
+
+## Contribution
+
+## License
