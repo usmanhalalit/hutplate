@@ -1,4 +1,5 @@
 # HutPlate
+[![Build Status](https://travis-ci.org/usmanhalalit/hutplate.svg?branch=master)](https://travis-ci.org/usmanhalalit/hutplate)
 
 HutPlate is a Library over your standard net/http library which makes your life easier.
  
