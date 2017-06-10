@@ -1,13 +1,13 @@
 package hutplate
 
 import (
-	"net/http/httptest"
 	"testing"
+	"net/http"
 )
 
 func TestResponse_Redirect(t *testing.T) {
 	w := NewRecorder()
-	r := httptest.NewRequest("GET", "http://example.com", nil)
+	r, _ := http.NewRequest("GET", "http://example.com", nil)
 	hut := NewHttp(w, r)
 
 	expectedLocation := "http://example.com/a"
@@ -26,7 +26,7 @@ func TestResponse_Redirect(t *testing.T) {
 
 func TestResponse_RedirectWithCode(t *testing.T) {
 	w := NewRecorder()
-	r := httptest.NewRequest("GET", "http://example.com", nil)
+	r, _ := http.NewRequest("GET", "http://example.com", nil)
 	hut := NewHttp(w, r)
 
 	hut.Response.Redirect("a", 301)
@@ -40,7 +40,7 @@ func TestResponse_RedirectWithCode(t *testing.T) {
 
 func TestResponse_With(t *testing.T) {
 	w := NewRecorder()
-	r := httptest.NewRequest("GET", "http://example.com", nil)
+	r, _ := http.NewRequest("GET", "http://example.com", nil)
 	hut := NewHttp(w, r)
 
 	expected := "Test error message"
