@@ -254,6 +254,20 @@ import "github.com/gorilla/sessions"
 hutplate.Config.SessionStore = sessions.NewCookieStore(...)
 ```
 
+### Clear Context
+
+Important Note: If you aren't using gorilla/mux router, you need to wrap 
+your handlers with context.ClearHandler as or else you will leak memory! 
+An easy way to do this is to wrap the top-level mux when calling 
+http.ListenAndServe:
+```go
+	http.ListenAndServe(":8080", context.ClearHandler(http.DefaultServeMux))
+```
+The ClearHandler function is provided by the gorilla/context package.
+
+More examples are available 
+[on the Gorilla website](http://www.gorillatoolkit.org/pkg/sessions).
+
 ## List of Config
 
 ```go
@@ -272,6 +286,7 @@ hutplate.Config.ErrorHandler = func(err error, hp hutplate.Http) {
 hutplate.Config.SessionSecretKey = "a_secret_key"
 hutplate.Config.SessionDirectory = "path/to/dir"
 ```
+
 
 ___
 &copy; 2017 [Muhammad Usman](http://usman.it/). Licensed under MIT license.
