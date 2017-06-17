@@ -172,6 +172,15 @@ func CreatePost(hp hutplate.Http) interface{} {
 }
 ```
 
+Configure the error handler
+
+```go
+hutplate.Config.ErrorHandler = func(err error, hut hutplate.Http) {
+        // TODO log the error
+		http.Error(hut.Response, err.Error(), 404)
+}
+```
+
 ## Redirect
 
 ```go
@@ -212,17 +221,57 @@ err := hp.Session.Get("test_key")
 
 ### Session Config
 
-Store
+#### Storage Path
 
-Secret Key
+By default Session uses file system storage. You can optionally 
+configure the storage directory by setting:
+```go
+hutplate.Config.SessionDirectory = "path/to/dir"
+```
+By default it uses operating system's temp directory.
 
-## All Config
+#### Secret Key
+It is recommended that you set a session secret key by setting:
+```go
+hutplate.Config.SessionSecretKey = "your_key"
+````
 
-## Credits
+### Custom Session Store
 
-Gorilla Sessions
+As noted above, by default Session uses file system storage. But
+you can use an entire different session storage system. HutPlate
+uses [Gorilla Sessions](https://github.com/gorilla/sessions).
+So you can use any session storage supported by Gorilla Sessions, 
+i.e. the store that implements Gorilla's `sessions.Store` interface.
 
+[Here is a list](https://github.com/gorilla/sessions#store-implementations)
+ of session stores supported by Gorilla Sessions.
 
-## Contribution
+To use your own session store, use the SessionStore config,
+for example:
+```
+import "github.com/gorilla/sessions"
+hutplate.Config.SessionStore = sessions.NewCookieStore(...)
+```
 
-## License
+## List of Config
+
+```go
+hutplate.Config.GetUserWithId = func(userId interface{}) interface {} {
+
+}
+
+hutplate.Config.GetUserWithCred = func(credential interface{}) (interface{}, string) {
+    
+}
+
+hutplate.Config.ErrorHandler = func(err error, hp hutplate.Http) {
+
+}
+
+hutplate.Config.SessionSecretKey = "a_secret_key"
+hutplate.Config.SessionDirectory = "path/to/dir"
+```
+
+___
+&copy; 2017 [Muhammad Usman](http://usman.it/). Licensed under MIT license.
