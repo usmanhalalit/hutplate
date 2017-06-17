@@ -29,8 +29,10 @@ func CreatePost(hp hutplate.Http) interface{} {
 }
 ```
 
+<a name="setup"></a>
 ## Setup
 
+<a name="configuration"></a>
 ### Configuration
 
 The only mandatory configuration for HutPlate is that you let it know where to find your user 
@@ -53,6 +55,7 @@ hutplate.Config.GetUserWithCred = func(credential interface{}) (interface{}, str
 hutplate.Config.SessionSecretKey = "a_random_secret_key"
 ```
 
+<a name="hutplate-instance"></a>
 ### Creating a HutPlate Instance
 
 HutPlate comes with an HTTP handler, which gives you some extra power. 
@@ -78,9 +81,10 @@ func CreatePost(hp hutplate.Http) interface{} {
 }
 ```
 
-
+<a name="authentication"></a>
 ## Authentication
 
+<a name="login"></a>
 ### Login
 ```go
 success, _ := hp.Auth.Login(email, password)
@@ -96,17 +100,20 @@ Here is an example of how you hash you password using bcrypt
 hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), 14)
 ```
 
+<a name="check-if-logged-in"></a>
 ### Check if Logged In
 ```go
 hp.Auth.Check()
 ```
 Will return true or false.
 
+<a name="get-logged-in-user-id"></a>
 ### Get Logged in User ID
 ```go
 hp.Auth.UserId()
 ```
 
+<a name="get-logged-in-user"></a>
 ### Get the Logged in User
 
 It gives you the whole user object, not just id. To use this feature,
@@ -135,11 +142,13 @@ hutplate.Config.GetUserWithId = func(userId interface{}) interface {} {
 }
 ```
 
+<a name="logout"></a>
 ### Logout
 ```go
 hp.Auth.Logout()
 ```
 
+<a name="http-handler"></a>
 ## HutPlate HTTP Handler
 
 HutPlate also comes with an HTTP handler, using it is optional but you get so much
@@ -181,6 +190,7 @@ hutplate.Config.ErrorHandler = func(err error, hut hutplate.Http) {
 }
 ```
 
+<a name="redirect"></a>
 ## Redirect
 
 ```go
@@ -194,6 +204,7 @@ hp.Response.Redirect("/login").With("error", "Please do login!")
 hp.Response.Redirect("/login", 301)
 ```
  
+<a name="session"></a>
 ## Session
 
 Set a session value and it will persist.
@@ -206,6 +217,7 @@ Get the session value
 err := hp.Session.Get("test_key")
 ```
 
+<a name="flash-messages"></a>
 ### Flash Messages
 ```go
 err = hut.Session.SetFlash("test_key", "value")
@@ -218,9 +230,10 @@ err := hp.Session.Get("test_key")
 
 [As mentioned above](#Redirect) you can also easily set a flash message while you redirect.  
 
-
+<a name="session-config"></a>
 ### Session Config
 
+<a name="session-storage-path"></a>
 #### Storage Path
 
 By default Session uses file system storage. You can optionally 
@@ -230,13 +243,15 @@ hutplate.Config.SessionDirectory = "path/to/dir"
 ```
 By default it uses operating system's temp directory.
 
+<a name="session-secret-key"></a>
 #### Secret Key
 It is recommended that you set a session secret key by setting:
 ```go
 hutplate.Config.SessionSecretKey = "your_key"
 ````
 
-### Custom Session Store
+<a name="session-store"></a>
+### Configure Session Store
 
 As noted above, by default Session uses file system storage. But
 you can use an entire different session storage system. HutPlate
@@ -254,6 +269,7 @@ import "github.com/gorilla/sessions"
 hutplate.Config.SessionStore = sessions.NewCookieStore(...)
 ```
 
+<a name="clear-context"></a>
 ### Clear Context
 
 Important Note: If you aren't using gorilla/mux router, you need to wrap 
@@ -268,6 +284,7 @@ The ClearHandler function is provided by the gorilla/context package.
 More examples are available 
 [on the Gorilla website](http://www.gorillatoolkit.org/pkg/sessions).
 
+<a name="list-of-config"></a>
 ## List of Config
 
 ```go
