@@ -29,8 +29,38 @@ func CreatePost(hp hutplate.Http) interface{} {
 }
 ```
 
+## Table of Contents
+
+  - [Setup](#setup)
+      - [Configuration](#configuration)
+      - [Creating a HutPlate Instance](#hutplate-instance)
+  - [Authentication](#authentication)
+      - [Login](#login)
+      - [Check if Logged In](#check-if-logged-in)
+      - [Get Logged in User ID](#get-logged-in-user-id)
+      - [Get the Logged in User](#get-logged-in-user)
+      - [Logout](#logout)
+  - [HutPlate HTTP Handler](#http-handler)
+  - [Redirect](#redirect)
+  - [Session](#session)
+      - [Flash Messages](#flash-messages)
+      - [Session Config](#session-config)
+          - [Storage Path](#session-storage-path)
+          - [Secret Key](#session-secret-key)
+      - [Configure Session Store](#session-store)
+      - [Clear Context](#clear-context)
+  - [List of Config](#list-of-config)
+  
 <a name="setup"></a>
 ## Setup
+
+Just go get:
+```
+go get github.com/usmanhalalit/hutplate
+```
+
+and import the package.
+
 
 <a name="configuration"></a>
 ### Configuration
