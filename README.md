@@ -98,7 +98,7 @@ func MyHandler(w http.ResponseWriter, r *http.Request,) {
 }
 ```
 
-If you use the HutPlate handler, then it even easier:
+If you use the HutPlate handler, then it is even easier:
 ```go
 router.Handle("/", hutplate.Handler(CreatePost))
 
