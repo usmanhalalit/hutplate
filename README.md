@@ -336,4 +336,4 @@ hutplate.Config.SessionDirectory = "path/to/dir"
 
 
 ___
-&copy; 2017 [Muhammad Usman](http://usman.it/). Licensed under MIT license.
+&copy; 2020 [Muhammad Usman](https://usman.it/). Licensed under MIT license.
